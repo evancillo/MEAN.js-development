@@ -1,0 +1,68 @@
+.content {
+  margin-top: 50px; }
+
+.undecorated-link:hover {
+  text-decoration: none; }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important; }
+
+.ng-invalid.ng-dirty {
+  border-color: #FA787E; }
+
+.ng-valid.ng-dirty {
+  border-color: #78FA89; }
+
+.home-logo {
+  font-size: 20px;
+  padding: 150px 50px;
+  text-align: center;
+  width: 100%;
+  color: #f5f5f5; }
+  .home-logo > div {
+    display: inline-block; }
+  .home-logo div:nth-child(1) > span {
+    font-size: 30px; }
+    .home-logo div:nth-child(1) > span > b {
+      font-weight: 200;
+      font-size: 80px; }
+
+.home-bg-img {
+  background-color: #406474;
+  background: url("/modules/core/img/brand/background.jpg"); }
+
+.home-expli {
+  text-align: center;
+  margin: 30px auto;
+  font-size: 20px;
+  width: 100%;
+  max-width: 1200px; }
+  .home-expli > div {
+    min-width: 310px;
+    max-width: 320px;
+    display: inline-block;
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    vertical-align: top;
+    min-height: 405px; }
+    .home-expli > div .div-icon {
+      margin-bottom: 80px;
+      padding-top: 80px; }
+      .home-expli > div .div-icon > span {
+        font-size: 50px;
+        padding: 55px;
+        border-radius: 50%;
+        background-color: #406474;
+        color: #f5f5f5; }
+    .home-expli > div > span {
+      display: inline-block; }
+    .home-expli > div span:nth-child(2) {
+      color: #E35B43;
+      font-size: 24px;
+      margin-bottom: 16px; }
+    .home-expli > div span:nth-child(3) {
+      font-size: 18px;
+      text-align: justify; }
+
+/*# sourceMappingURL=core.css.map */
