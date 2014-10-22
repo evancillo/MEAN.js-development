@@ -63,6 +63,7 @@ exports.signin = function(req, res, next) {
 					res.status(400).send(err);
 				} else {
 					res.jsonp(user);
+                  //  res.redirect('/folders')
 				}
 			});
 		}
@@ -91,7 +92,7 @@ exports.oauthCallback = function(strategy) {
 					return res.redirect('/#!/signin');
 				}
 
-				return res.redirect(redirectURL || '/');
+				return res.redirect(redirectURL || '/#!/folders');
 			});
 		})(req, res, next);
 	};
