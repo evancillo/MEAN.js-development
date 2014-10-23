@@ -23,7 +23,10 @@ var FolderSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}
+	},
+    folders:{
+        type:[FolderSchema]
+    }
 });
 
 mongoose.model('Folder', FolderSchema);
