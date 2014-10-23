@@ -5,12 +5,18 @@
  */
 var mongoose = require('mongoose'),
     Permission = mongoose.model('Permission'),
+    File = mongoose.model('File'),
+    uuid = require('node-uuid'),
 	Schema = mongoose.Schema;
 
 /**
  * Folder Schema
  */
 var FolderSchema = new Schema({
+    uuid:{
+        type: String,
+        unique: true
+    },
 	name: {
 		type: String,
 		default: '',
@@ -30,7 +36,15 @@ var FolderSchema = new Schema({
     },
     permissions:{
         type: [Permission]
+    },
+    files:{
+        type: [File]
     }
+});
+
+FolderSchema.pre('save', function(){
+    this.uuid = uuid.v1();
+    next();
 });
 
 mongoose.model('Folder', FolderSchema);
