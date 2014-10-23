@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    Permission = mongoose.model('Permission'),
 	Schema = mongoose.Schema;
 
 /**
@@ -26,6 +27,9 @@ var FolderSchema = new Schema({
 	},
     folders:{
         type:[FolderSchema]
+    },
+    permissions:{
+        type: [Permission]
     }
 });
 
