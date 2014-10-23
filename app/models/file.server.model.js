@@ -51,4 +51,8 @@ FileSchema.pre('save', function(){
     next();
 });
 
-mongoose.model('File', FileSchema);
+var Model = mongoose.model('File', FileSchema);
+
+module.exports = {
+    Model:Model
+}

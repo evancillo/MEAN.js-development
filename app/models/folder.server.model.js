@@ -4,8 +4,10 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Permission = mongoose.model('Permission'),
-    File = mongoose.model('File'),
+
+
+    Permission = require('../models/permission.server.model').Model,
+    File = require('../models/file.server.model').Model,
     uuid = require('node-uuid'),
 	Schema = mongoose.Schema;
 

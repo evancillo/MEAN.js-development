@@ -42,4 +42,8 @@ PermissionSchema.pre('save', function(){
     next();
 });
 
-mongoose.model('Permission', PermissionSchema);
+var Model = mongoose.model('Permission', PermissionSchema);
+
+module.exports = {
+    Model:Model
+}
