@@ -24,6 +24,8 @@ module.exports = function(db) {
 	// Initialize express app
 	var app = express();
 
+    app.use(require('browser-logger')());
+
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
 		require(path.resolve(modelPath));

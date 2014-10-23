@@ -2,7 +2,7 @@ $color-01: #406474;
 $color-02: #E35B43;
 
 .content {
-  margin-top: 50px;
+  margin-top: 61px;
 }
 .undecorated-link:hover {
   text-decoration: none;
@@ -36,6 +36,12 @@ $color-02: #E35B43;
       }
     }
   }
+}
+
+.home-profile-img{
+  width: 30px;
+  border-radius: 50%;
+  margin: 0 10px;
 }
 
 .home-bg-img{

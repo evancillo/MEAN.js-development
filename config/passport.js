@@ -7,6 +7,7 @@ var passport = require('passport'),
 
 module.exports = function() {
 	// Serialize sessions
+
 	passport.serializeUser(function(user, done) {
 		done(null, user.id);
 	});

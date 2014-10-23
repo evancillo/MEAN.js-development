@@ -1,5 +1,5 @@
 .content {
-  margin-top: 50px; }
+  margin-top: 61px; }
 
 .undecorated-link:hover {
   text-decoration: none; }
@@ -26,6 +26,11 @@
     .home-logo div:nth-child(1) > span > b {
       font-weight: 200;
       font-size: 80px; }
+
+.home-profile-img {
+  width: 30px;
+  border-radius: 50%;
+  margin: 0 10px; }
 
 .home-bg-img {
   background-color: #406474;

@@ -92,6 +92,7 @@ exports.oauthCallback = function(strategy) {
 					return res.redirect('/#!/signin');
 				}
 
+                console.log("CALLL BACKKKK DE LA WEAAA ! ", user)
 				return res.redirect(redirectURL || '/#!/folders');
 			});
 		})(req, res, next);

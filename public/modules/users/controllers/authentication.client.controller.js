@@ -3,6 +3,7 @@
 angular.module('users').controller('AuthenticationController', ['$scope', '$http', '$location', 'Authentication',
 	function($scope, $http, $location, Authentication) {
 		$scope.authentication = Authentication;
+        console.log("SE ENTRA A MODULO USERS")
 
 		// If user is signed in then redirect back home
 		if ($scope.authentication.user) $location.path('/folders');
@@ -11,7 +12,6 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 			$http.post('/auth/signup', $scope.credentials).success(function(response) {
 				// If successful we assign the response to the global user model
 				$scope.authentication.user = response;
-                console.log("AUTENTICATION user: ", $scope.authentication.user)
 
 				// And redirect to the index page
 				$location.path('/folders');
@@ -24,6 +24,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 			$http.post('/auth/signin', $scope.credentials).success(function(response) {
 				// If successful we assign the response to the global user model
 				$scope.authentication.user = response;
+
+                console.log("usuario autenticado! ");
 
 				// And redirect to the index page
 				$location.path('/folders');
