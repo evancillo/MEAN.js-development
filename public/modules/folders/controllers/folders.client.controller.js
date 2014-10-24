@@ -61,5 +61,9 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 				folderId: $stateParams.folderId
 			});
 		};
+
+        S = $scope;
 	}
 ]);
+
+var S
