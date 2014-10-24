@@ -1,3 +1,6 @@
+.header-mh {
+  min-height: 61px; }
+
 .content {
   margin-top: 61px; }
 
@@ -29,7 +32,7 @@
 
 .home-profile-img {
   width: 30px;
-  border-radius: 50%;
+  border-radius: 5px;
   margin: 0 10px; }
 
 .home-bg-img {

@@ -1,6 +1,9 @@
 $color-01: #406474;
 $color-02: #E35B43;
 
+.header-mh{
+  min-height: 61px;
+}
 .content {
   margin-top: 61px;
 }
@@ -40,7 +43,7 @@ $color-02: #E35B43;
 
 .home-profile-img{
   width: 30px;
-  border-radius: 50%;
+  border-radius: 5px;
   margin: 0 10px;
 }
 
