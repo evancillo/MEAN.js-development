@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACA,eAAe;EACb,SAAS,EAAE,KAAK;EAChB,qBAAI;IACF,OAAO,EAAE,YAAY;;AAIzB,cAAc;EACZ,OAAO,EAAE,IAAI",
+"sources": ["scss/folder.scss"],
+"names": [],
+"file": "folder.css"
+}

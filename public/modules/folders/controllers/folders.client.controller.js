@@ -4,6 +4,18 @@
 angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders',
 	function($scope, $stateParams, $location, Authentication, Folders ) {
 		$scope.authentication = Authentication;
+        $scope.folder = {
+            new : ""
+        }
+
+        // agregar un nuevo directorio.
+        $scope.addNewFolder = function(){
+            if ($scope.folder.new != ""){
+                console.log("se crea nuevo folder con nombre: "+ $scope.folder.new)
+            }
+        }
+
+
 
 		// Create new Folder
 		$scope.create = function() {
