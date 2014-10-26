@@ -6,4 +6,11 @@
 .folder-header {
   padding: 20px; }
 
+.folder-list-icon {
+  font-size: 40px;
+  color: lightblue; }
+
+.folder-icon-mw {
+  min-width: 50px; }
+
 /*# sourceMappingURL=folder.css.map */

@@ -14,6 +14,11 @@ module.exports = function(app) {
 		.put(users.requiresLogin, folders.hasAuthorization, folders.update)
 		.delete(users.requiresLogin, folders.hasAuthorization, folders.delete);
 
+    app.route('/folder/user/:userId/folderName/:name')
+        .get(folders.checkName)
+
 	// Finish by binding the Folder middleware
 	app.param('folderId', folders.folderByID);
+    app.param('userId', folders.checkName);
+    app.param('name', folders.checkName);
 };

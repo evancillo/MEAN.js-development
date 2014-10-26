@@ -33,18 +33,26 @@ var FolderSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-    folders:{
-        type:[FolderSchema]
+	type:{
+        type: String,
+        default:'folder'
     },
+    folders:[
+        {
+            type: Schema.ObjectId,
+            ref: 'Folder'
+        }
+    ]/*,
     permissions:{
         type: [Permission]
     },
     files:{
         type: [File]
-    }
+    } */
 });
 
-FolderSchema.pre('save', function(){
+
+FolderSchema.pre('save', function(next){
     this.uuid = uuid.v1();
     next();
 });

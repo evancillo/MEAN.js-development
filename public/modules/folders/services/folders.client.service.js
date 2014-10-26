@@ -9,5 +9,11 @@ angular.module('folders').factory('Folders', ['$resource',
 				method: 'PUT'
 			}
 		});
+
+       /* return $resource('folders/',{},{
+            update:{
+                method: 'PUT'
+            }
+        }) */
 	}
 ]);

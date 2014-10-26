@@ -1,17 +1,72 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders',
-	function($scope, $stateParams, $location, Authentication, Folders ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource ) {
 		$scope.authentication = Authentication;
         $scope.folder = {
-            new : ""
+            new : "",
+            actual: ""
         }
+
+        function checkRootFolder(){
+
+
+            var folderRoot = $resource('/folder/user/:userId/folderName/:name', {
+
+                'userId' : $scope.authentication.user._id,
+                 name: 'root'
+            });
+
+            var resp = folderRoot.get(function(){
+                if (resp.status == 0){
+                    var folder = new Folders({
+                        name: 'root'
+                    });
+
+                    folder.$save(function(resp){
+                        console.log("se crea folder root", resp);
+                    }, function(error){
+                        console.error("error al crear root", error);
+                    })
+                }
+
+            });
+
+        }
+
+        checkRootFolder();
+
+
 
         // agregar un nuevo directorio.
         $scope.addNewFolder = function(){
             if ($scope.folder.new != ""){
                 console.log("se crea nuevo folder con nombre: "+ $scope.folder.new)
+
+                var folder = new Folders ({
+                    name: $scope.folder.new
+                });
+
+                folder.$save(function(response){
+                    // limpia datos ingresados.
+                    console.log("Se guarda foler exitosamente. ", response)
+                    $scope.folder.new = ""
+                    $scope.find();
+
+                }, function(errorResponse){
+                    console.error("Error al guardar folder ", errorResponse)
+                });
+
+            }
+        }
+
+        $scope.setIcon = function (type){
+            switch (type){
+                case 'folder':
+                    return "dms-icon-folder"
+                    break;
+
             }
         }
 
@@ -20,8 +75,11 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 		// Create new Folder
 		$scope.create = function() {
 			// Create new Folder object
+
+            console.log("Se llama a create!")
 			var folder = new Folders ({
-				name: this.name
+                name: this.name
+
 			});
 
 			// Redirect after save

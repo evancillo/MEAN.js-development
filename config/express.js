@@ -24,7 +24,7 @@ module.exports = function(db) {
 	// Initialize express app
 	var app = express();
 
-    app.use(require('browser-logger')());
+    app.use(require('browser-logger')());  //para ver el log en el Browser, retirar en prod
 
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {

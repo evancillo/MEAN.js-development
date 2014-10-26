@@ -33,6 +33,51 @@ exports.read = function(req, res) {
 	res.jsonp(req.folder);
 };
 
+
+exports.checkName = function(req, res){
+    console.log("se llama checkName!!  con el req  nuevo", req.params);
+
+    Folder.findOne({
+        name: req.params.name,
+        'user' : req.params.userId
+    }).populate('user', 'displayName').exec(function(err, folder){
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+        if (! folder){
+            return res.send({
+                message: 'No se encuentra Root',
+                status: 0,
+                data:[]
+            });
+        }
+        else{
+            return res.send({
+                message: 'Usuario Ya posee Root',
+                status: 1,
+                data:[folder]
+            })
+
+
+        }
+    });
+
+
+   /* Folder.find().sort('-created').populate('user', 'displayName').exec(function(err, folders) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(folders);
+        }
+    }); */
+};
+
+
+
 /**
  * Update a Folder
  */

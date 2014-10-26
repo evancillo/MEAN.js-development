@@ -11,23 +11,35 @@
                 Agregar
             </button>
         </div>
-
-
-
-
     </div>
+
     <div class="list-group">
         <a data-ng-repeat="folder in folders" data-ng-href="#!/folders/{{folder._id}}" class="list-group-item">
-			<small class="list-group-item-text">
+			<!--<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="folder.created | date:'medium'"></span>
 				by
 				<span data-ng-bind="folder.user.displayName"></span>
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="folder.name"></h4>
+            -->
+          <div class="row">
+              <div class="col-xs-1 folder-icon-mw">
+                  <span class="folder-list-icon" ng-class="setIcon(folder.type)"></span>
+              </div>
+              <div class="col-xs-9">
+                  <span data-ng-bind="folder.name"></span>
+              </div>
+              <div class="col-xs-1">opcion 1</div>
+              <div class="col-xs-1">opcion 2</div>
+          </div>
+
+
+
+
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!folders.$resolved || folders.length">
-    	No Folders yet, why don't you <a href="/#!/folders/create">create one</a>?
+    	No hay carpetas aún, por qué no creas una?
     </div>
 </section>
