@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
     Permission = require('../models/permission.server.model').Model,
     File = require('../models/file.server.model').Model,
     uuid = require('node-uuid'),
+    materializedPlugin = require('mongoose-materialized'),
 	Schema = mongoose.Schema;
 
 /**
@@ -50,6 +51,8 @@ var FolderSchema = new Schema({
         type: [File]
     } */
 });
+
+FolderSchema.plugin(materializedPlugin);
 
 
 FolderSchema.pre('save', function(next){

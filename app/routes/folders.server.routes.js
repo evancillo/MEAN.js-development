@@ -14,6 +14,12 @@ module.exports = function(app) {
 		.put(users.requiresLogin, folders.hasAuthorization, folders.update)
 		.delete(users.requiresLogin, folders.hasAuthorization, folders.delete);
 
+    app.route('/folder/appendChild/:parentId/folderName/:childName')
+        .get(folders.appendChild);
+
+    app.route('/folder/appendChildPOST')
+        .post(folders.appendChildPOST);
+
     app.route('/folder/user/:userId/folderName/:name')
         .get(folders.checkName)
 
@@ -21,4 +27,6 @@ module.exports = function(app) {
 	app.param('folderId', folders.folderByID);
     app.param('userId', folders.checkName);
     app.param('name', folders.checkName);
+    app.param('parentId', folders.appendChild);
+    app.param('childName', folders.appendChild);
 };

@@ -26,6 +26,29 @@ exports.create = function(req, res) {
 	});
 };
 
+
+exports.appendChild = function (req, res){
+
+    console.log ("Se llama a appendChild con params", req.params);
+
+
+
+    res.send({
+        message: "response correcto!"
+    })
+
+}
+
+exports.appendChildPOST = function (req, res){
+    console.log ("Se llama a appendChildPOST con req", req.query);
+
+    res.send({
+        message: "SE PUDO HACER EN POST MIERDA :D!!!! "
+    })
+}
+
+
+
 /**
  * Show the current Folder
  */
@@ -59,22 +82,11 @@ exports.checkName = function(req, res){
                 status: 1,
                 data:[folder]
             })
-
-
         }
     });
-
-
-   /* Folder.find().sort('-created').populate('user', 'displayName').exec(function(err, folders) {
-        if (err) {
-            return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            res.jsonp(folders);
-        }
-    }); */
 };
+
+
 
 
 

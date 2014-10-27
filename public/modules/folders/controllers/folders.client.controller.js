@@ -1,8 +1,8 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder','RootFolderObj',
-	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder, RootFolderObj ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder','RootFolderObj','FolderApi',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder, RootFolderObj, FolderApi ) {
 		$scope.authentication = Authentication;
 
         $scope.folder = {
@@ -87,12 +87,14 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
             }
         }
 
-        $scope.addChildFolder = function(){
-           addNewFolder(function(resp){
-               $scope.folder.actual.folders.push(resp);
-               customUpdate();
-           })
+        $scope.appendChildFolder = function(){
+
+            FolderApi.appendChildPOST($scope.folder.actual._id, $scope.folder.new)
+
         }
+
+
+
 
         $scope.goIntoFolder = function(folder){
             customFindOne(folder, function(resp){
