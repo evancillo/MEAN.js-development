@@ -1,18 +1,44 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder',
-	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder','RootFolderObj',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder, RootFolderObj ) {
 		$scope.authentication = Authentication;
+
         $scope.folder = {
             new : "",
             actual: "",
-            root: RootFolder.getRootFolder()
+            root: RootFolder.getRootFolder(),
+            path:[]
+        }
+        //$scope.folder = [];
+
+
+        function refreshRootFolder(){
+             if ($scope.$$phase) { // most of the time it is "$digest"
+                 applyFnc();
+             } else {
+                 $scope.$apply(applyFnc);
+             }
         }
 
-        
+        var applyFnc = function (){
+            $scope.folder.root = RootFolderObj.getFolder();
+            var folders = []
+            folders.push($scope.folder.root);
+            $scope.folders = folders;
+
+        }
+
+        setTimeout(function(){
+            refreshRootFolder();
+        }, 500)
+
+
+
+
         // agregar un nuevo directorio.
-        $scope.addNewFolder = function(){
+         var  addNewFolder = function(callback){
             if ($scope.folder.new != ""){
                 console.log("se crea nuevo folder con nombre: "+ $scope.folder.new)
 
@@ -24,13 +50,32 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                     // limpia datos ingresados.
                     console.log("Se guarda foler exitosamente. ", response)
                     $scope.folder.new = ""
-                    $scope.find();
+                   // $scope.find();
+                     callback(response);
 
                 }, function(errorResponse){
                     console.error("Error al guardar folder ", errorResponse)
                 });
 
             }
+        }
+
+        function customUpdate(){
+            var folder = $scope.folder.actual;
+            folder.$update(function(resp){
+
+            }, function(errorResponse){
+                $scope.error = errorResponse.data.message;
+            })
+        }
+
+        function customFindOne(folder, callback){
+
+             Folders.get({
+                        folderId: folder._id
+                    }, function(resp){
+                         callback(resp);
+             });
         }
 
         $scope.setIcon = function (type){
@@ -43,10 +88,22 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         }
 
         $scope.addChildFolder = function(){
-
-
+           addNewFolder(function(resp){
+               $scope.folder.actual.folders.push(resp);
+               customUpdate();
+           })
         }
 
+        $scope.goIntoFolder = function(folder){
+            customFindOne(folder, function(resp){
+                console.log("Se recibe respuesta dentro del callback! ", resp);
+                $scope.folder.actual = resp
+                $scope.folders = $scope.folder.actual.folders;
+                $scope.folder.path.push(folder.name);
+
+            });
+
+        }
 
 
 		// Create new Folder
@@ -108,6 +165,14 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 				folderId: $stateParams.folderId
 			});
 		};
+
+
+
+
+
+
+
+
 
         S = $scope;
 	}

@@ -3,45 +3,59 @@
  */
 'use strict';
 
-angular.module('folders').factory('RootFolder',['$resource', 'Authentication', 'Folders',
-    function($resource, Authentication, Folders) {
+angular.module('folders').factory('RootFolder',['$resource', 'Authentication', 'Folders','RootFolderObj',
+    function($resource, Authentication, Folders, RootFolderObj) {
 
         var authentication = Authentication;
-        var rootFolder = {};
+        var rootFolder = ""
 
         var folderRoot = $resource('/folder/user/:userId/folderName/:name', {
             'userId' : authentication.user._id,
             name: 'root'
         });
 
-        var resp = folderRoot.get(function(){
-            if (resp.status == 0){
-                var folder = new Folders({
-                    name: 'root'
-                });
-
-                folder.$save(function(resp){
-                    console.log("se crea folder root", resp);
-                    rootFolder = resp;
-
-                }, function(error){
-                    console.error("error al crear root", error);
-                })
-            }
-            if (resp.status == 1){
-                console.log("usuario ya cuenta con rootFolder, se asigna!")
-
-                rootFolder = resp.data[0];
-            }
-        });
-
 
         return {
             getRootFolder : function(){
-                return rootFolder;
-            }
-        }
 
+                    return folderRoot.get(function(resp){
+                            if (resp.status == 0){
+                                var folder = new Folders({
+                                    name: 'root'
+                                });
+
+                                folder.$save(function(respu){
+                                    console.log("se crea folder root", respu);
+                                    RootFolderObj.setFolder(respu);
+
+                                }, function(error){
+                                    console.error("error al crear root", error);
+                                })
+                            }
+                            if (resp.status == 1){
+                                rootFolder = resp.data[0];
+                                RootFolderObj.setFolder(rootFolder);
+
+                            }
+                        });
+           }
+
+        }
 
     }
 ]);
+
+angular.module('folders').factory('RootFolderObj', [function(){
+
+    var folder = "";
+
+    return {
+        setFolder : function(obj){
+            folder = obj;
+        },
+        getFolder : function(){
+            return folder;
+        }
+    }
+
+}]);

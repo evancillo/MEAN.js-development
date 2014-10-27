@@ -1,12 +1,16 @@
-<section data-ng-controller="FoldersController" data-ng-init="find()">
+<section data-ng-controller="FoldersController">
     <div class="page-header folder-header">
 
-        <div class="folder-agregar">
+        <ol class="breadcrumb" ng-repeat="path in folder.path">
+            <li>{{path}}</li>
+        </ol>
+
+        <div class="folder-agregar" ng-show="folder.path.length">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Nombre" ng-model="folder.new">
             </div>
 
-            <button type="button" class="btn btn-success" ng-click="addNewFolder()">
+            <button type="button" class="btn btn-success" ng-click="addChildFolder()">
                 <span class="dms-icon-folder"></span>
                 Agregar
             </button>
@@ -14,7 +18,8 @@
     </div>
 
     <div class="list-group">
-        <a data-ng-repeat="folder in folders" data-ng-href="#!/folders/{{folder._id}}" class="list-group-item">
+        <a data-ng-repeat="folder in folders" ng-click="goIntoFolder(folder)" class="list-group-item">
+       <!-- <a data-ng-repeat="folder in folders" data-ng-href="#!/folders/{{folder._id}}" class="list-group-item"> -->
 			<!--<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="folder.created | date:'medium'"></span>
