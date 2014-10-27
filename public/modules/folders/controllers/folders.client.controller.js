@@ -1,44 +1,16 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource',
-	function($scope, $stateParams, $location, Authentication, Folders, $resource ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder ) {
 		$scope.authentication = Authentication;
         $scope.folder = {
             new : "",
-            actual: ""
+            actual: "",
+            root: RootFolder.getRootFolder()
         }
 
-        function checkRootFolder(){
-
-
-            var folderRoot = $resource('/folder/user/:userId/folderName/:name', {
-
-                'userId' : $scope.authentication.user._id,
-                 name: 'root'
-            });
-
-            var resp = folderRoot.get(function(){
-                if (resp.status == 0){
-                    var folder = new Folders({
-                        name: 'root'
-                    });
-
-                    folder.$save(function(resp){
-                        console.log("se crea folder root", resp);
-                    }, function(error){
-                        console.error("error al crear root", error);
-                    })
-                }
-
-            });
-
-        }
-
-        checkRootFolder();
-
-
-
+        
         // agregar un nuevo directorio.
         $scope.addNewFolder = function(){
             if ($scope.folder.new != ""){
@@ -68,6 +40,11 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                     break;
 
             }
+        }
+
+        $scope.addChildFolder = function(){
+
+
         }
 
 
