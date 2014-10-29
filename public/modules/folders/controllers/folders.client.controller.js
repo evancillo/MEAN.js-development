@@ -1,8 +1,8 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder','RootFolderObj','FolderApi',
-	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder, RootFolderObj, FolderApi ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder','RootFolderObj','FolderApi','$filter',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder, RootFolderObj, FolderApi, $filter ) {
 		$scope.authentication = Authentication;
 
         $scope.folder = {
@@ -11,6 +11,48 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
             root: "",
             path:[]
         }
+        $scope.breadcrumbs = [];
+        var visitedFolders = [];
+
+
+
+        function addToPathFolders (folder){
+           var hasTheId = $filter('filter')(visitedFolders, function (d) {return d._id === folder._id;});
+            if (hasTheId.length == 0){
+                visitedFolders.push(folder)
+            }
+
+            $scope.breadcrumbs = $scope.getBreadcrum();
+        }
+
+        $scope.getVisitedFolders = function (){
+            return visitedFolders;
+        }
+
+        $scope.getBreadcrum = function(){
+
+           var paths = $scope.folder.actual.path.split(',')
+
+           var breadCrums = [];
+
+            for (var i = 0; i < paths.length; i++){
+
+                if (paths[i]!= ""){
+                    var folder = $filter('filter')(visitedFolders, function (d) {return d._id === paths[i];})[0];
+
+                    var pathWithName = {
+                        _id : folder._id,
+                        name: folder.name
+                    }
+
+                    breadCrums.push(pathWithName)
+                }
+            }
+            return breadCrums
+        }
+
+
+
         //$scope.folder = [];
 
         /*
@@ -127,6 +169,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                 $scope.folder.path.push(folder.name);
 
                 getFolderChildren($scope.folder.actual._id);
+
+                addToPathFolders($scope.folder.actual);
 
             });
 
