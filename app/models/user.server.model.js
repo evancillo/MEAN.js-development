@@ -21,6 +21,7 @@ var validateLocalStrategyPassword = function(password) {
 	return (this.provider !== 'local' || (password && password.length > 6));
 };
 
+
 /**
  * User Schema
  */
@@ -36,6 +37,7 @@ var UserSchema = new Schema({
 		trim: true,
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your last name']
+
 	},
 	displayName: {
 		type: String,

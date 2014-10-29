@@ -20,6 +20,16 @@ module.exports = function(app) {
     app.route('/folder/appendChildPOST')
         .post(folders.appendChildPOST);
 
+    app.route('/folder/getFullTree')
+        .post(folders.getFullTree);
+
+    app.route('/folder/getFolderChildren')
+        .post(folders.getFolderChildren)
+
+    app.route('/folder/getRootFolder')
+        .post(folders.getRootFolder)
+
+
     app.route('/folder/user/:userId/folderName/:name')
         .get(folders.checkName)
 

@@ -33,6 +33,8 @@ exports.appendChild = function (req, res){
 
 
 
+
+
     res.send({
         message: "response correcto!"
     })
@@ -40,13 +42,177 @@ exports.appendChild = function (req, res){
 }
 
 exports.appendChildPOST = function (req, res){
-    console.log ("Se llama a appendChildPOST con req", req.query);
 
-    res.send({
-        message: "SE PUDO HACER EN POST MIERDA :D!!!! "
+    Folder.findById(req.query.parentId, function(err, doc){
+
+        if (err){
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+        if (!doc){
+            return res.send({
+                message: 'no se encuentra folder por ID',
+                status: 0,
+                data:[]
+            })
+        }
+        else{
+           doc.appendChild({
+               name: req.query.childName
+           }, function(error, data){
+               if(error){
+                   return res.status(400).send({
+                       message: errorHandler.getErrorMessage(error)
+                   });
+               }
+               if(!data){
+                   return res.send({
+                       message: 'me falló el append',
+                       status: 0,
+                       data:[]
+                   })
+
+               }else{
+                   return res.send({
+                       message: 'Todo bien por acá',
+                       status: 1,
+                       data:[data]
+                   })
+
+               }
+           })
+
+        }
+
+    });
+}
+
+exports.getFullTree = function(req, res){
+    Folder.GetArrayTree(req.query.parentId, function(err, tree){
+        if (err){
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+        if (!tree){
+            return res.send({
+                message: 'No se encontró TREE',
+                status: 0,
+                data:[]
+            })
+        }else{
+            return res.send({
+                message: 'Se encuentra tree',
+                status: 1,
+                data: tree
+            })
+        }
     })
 }
 
+exports.getFolderChildren = function (req, res){
+    Folder.findById(req.query.parentId, function(err, doc){
+        if (err){
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+        if (!doc){
+            return res.send({
+                message: 'no se encuentra folder por ID',
+                status: 0,
+                data:[]
+            })
+        }
+        else{
+
+           doc.getChildren(function(err, childs){
+
+               if (err){
+                   return res.status(400).send({
+                       message: errorHandler.getErrorMessage(err)
+                   });
+               }
+               if (!childs){
+                   return res.send({
+                       message: 'No se encuentran Children',
+                       status: 0,
+                       data:[]
+                   })
+               } else{
+                   return res.send({
+                       message: 'Se envían Children',
+                       status: 1,
+                       data: childs
+                   })
+               }
+
+
+           })
+        }
+    });
+    /*
+    Folder.GetChildren(req.query.parentId, function(err, docs){
+        if (err){
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+        if (!docs){
+            return res.send({
+                message: 'No se encuentra doc',
+                status: 0,
+                data:[]
+            })
+        }else{
+            return res.send({
+                message: 'Se envian Children',
+                status: 1,
+                data: docs
+            })
+        }
+    }) */
+}
+
+exports.getRootFolder = function (req, res){
+    Folder.findOne({name: req.query.userId}, function(err, root){
+        if (err){
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+        if(!root){
+            var rootFolder = new Folder({name: req.query.userId});
+            rootFolder.save(function(error, folder){
+                if (error){
+                    return res.status(400).send({
+                        message: errorHandler.getErrorMessage(error)
+                    });
+                }
+                if (!folder){
+                    return res.send({
+                        message: 'No se puede crear Root',
+                        status: 0,
+                        data: [folder]
+                    })
+                }else{
+                    return res.send({
+                        message: 'se crea nuevo root',
+                        status: 1,
+                        data: [folder]
+                    })
+                }
+            })
+        }else{
+            return res.send({
+                message: 'Se encuentra Root',
+                status: 1,
+                data: [root]
+            })
+        }
+    })
+}
 
 
 /**

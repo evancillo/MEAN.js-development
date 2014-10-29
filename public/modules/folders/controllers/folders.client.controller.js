@@ -8,11 +8,12 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         $scope.folder = {
             new : "",
             actual: "",
-            root: RootFolder.getRootFolder(),
+            root: "",
             path:[]
         }
         //$scope.folder = [];
 
+        /*
 
         function refreshRootFolder(){
              if ($scope.$$phase) { // most of the time it is "$digest"
@@ -34,9 +35,9 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
             refreshRootFolder();
         }, 500)
 
+        */
 
-
-
+        /*
         // agregar un nuevo directorio.
          var  addNewFolder = function(callback){
             if ($scope.folder.new != ""){
@@ -69,6 +70,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
             })
         }
 
+        */
+
         function customFindOne(folder, callback){
 
              Folders.get({
@@ -87,25 +90,64 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
             }
         }
 
-        $scope.appendChildFolder = function(){
 
-            FolderApi.appendChildPOST($scope.folder.actual._id, $scope.folder.new)
 
+
+        function getFullTree (parentId){
+            FolderApi.getFullTree(parentId)
         }
 
+        function getFolderChildren(parentId){
+            FolderApi.getFolderChildren(parentId, function(resp){
+                $scope.folders = resp.data
+            })
+        }
+
+        function getRootFolder(){
+            FolderApi.getRootFolder($scope.authentication.user._id, function(resp){
+               $scope.folders = resp.data;
+               $scope.folder.root = resp.data[0];
+            });
+        }
+        getRootFolder();
 
 
+        $scope.appendChildFolder = function(){
+
+            FolderApi.appendChildPOST($scope.folder.actual._id, $scope.folder.new, function(resp){
+                console.log ("Se agrega Child ", resp);
+                $scope.folders.push(resp.data[0]);
+            })
+        }
 
         $scope.goIntoFolder = function(folder){
             customFindOne(folder, function(resp){
                 console.log("Se recibe respuesta dentro del callback! ", resp);
-                $scope.folder.actual = resp
-                $scope.folders = $scope.folder.actual.folders;
+                $scope.folder.actual = resp;
                 $scope.folder.path.push(folder.name);
+
+                getFolderChildren($scope.folder.actual._id);
 
             });
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 		// Create new Folder

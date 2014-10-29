@@ -18,7 +18,7 @@
     </div>
 
     <div class="list-group">
-        <a data-ng-repeat="folder in folders" ng-click="goIntoFolder(folder)" class="list-group-item">
+        <a data-ng-repeat="fold in folders | filter:{ parentId : folder.actual._id }" ng-click="goIntoFolder(fold)" class="list-group-item">
        <!-- <a data-ng-repeat="folder in folders" data-ng-href="#!/folders/{{folder._id}}" class="list-group-item"> -->
 			<!--<small class="list-group-item-text">
 				Posted on
@@ -28,15 +28,19 @@
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="folder.name"></h4>
             -->
-          <div class="row">
+          <div class="row" >
               <div class="col-xs-1 folder-icon-mw">
-                  <span class="folder-list-icon" ng-class="setIcon(folder.type)"></span>
+                  <span class="folder-list-icon" ng-class="setIcon(fold.type)"></span>
               </div>
               <div class="col-xs-9">
-                  <span data-ng-bind="folder.name"></span>
+                  <span data-ng-bind="fold.name"></span>
               </div>
-              <div class="col-xs-1">opcion 1</div>
-              <div class="col-xs-1">opcion 2</div>
+              <div class="col-xs-1">
+                  <span class="folder-icon-mw dms-icon-edit"></span>
+              </div>
+              <div class="col-xs-1">
+                  <span class="folder-icon-mw dms-icon-close"></span>
+              </div>
           </div>
 
 

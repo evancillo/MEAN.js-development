@@ -38,7 +38,7 @@ angular.module('folders').factory('FolderApi', ['$resource', function($resource)
             return resource.get()
         },
 
-        appendChildPOST: function(parentId, childName){
+        appendChildPOST: function(parentId, childName, callback){
             var data = {
                 parentId: parentId,
                 childName: childName
@@ -46,8 +46,42 @@ angular.module('folders').factory('FolderApi', ['$resource', function($resource)
 
             var resource = $resource('/folder/appendChildPOST', data);
 
+             resource.save(function(resp){
+                 callback(resp)
+             });
+        },
+
+        getFullTree: function (parentId){
+
+            var data = {
+                parentId: parentId
+            }
+
+            var resource = $resource ('/folder/getFullTree', data);
+
             return resource.save();
+        },
+
+        getFolderChildren: function (parentId, callback){
+            var data = { parentId: parentId }
+
+            var resource = $resource ('/folder/getFolderChildren', data)
+
+            resource.save (function (resp){
+                callback(resp);
+            })
+        },
+
+        getRootFolder: function (userId, callback){
+            var data = {userId: userId};
+
+            var resouce = $resource ('/folder/                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ', data);
+
+            resouce.save (function(resp){
+                callback(resp);
+            })
         }
+
     }
 
 }]);
