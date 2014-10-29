@@ -2,9 +2,9 @@
     <div class="page-header folder-header">
 
         <ul class="breadcrumb">
-            <li ng-repeat='bc in breadcrumbs' ng-class="{'active': {{$last}} }">
-                <a ng-click="goIntoFolder(bc)" >{{bc.name}}</a>
-
+            <li ng-repeat='bc in breadcrumbs' ng-class="{'folder-bc-active': $last }">
+                <a ng-click="goIntoFolder(bc)" ng-hide="$last" >{{bc.name}}</a>
+                <span class="folder-bc-active" ng-show="$last"> {{bc.name}}</span>
             </li>
         </ul>
 

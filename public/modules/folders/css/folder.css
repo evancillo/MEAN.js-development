@@ -13,4 +13,7 @@
 .folder-icon-mw {
   min-width: 50px; }
 
+.folder-bc-active > a {
+  color: #777 !important; }
+
 /*# sourceMappingURL=folder.css.map */

@@ -33,6 +33,11 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
            var paths = $scope.folder.actual.path.split(',')
 
+           var lastPath = {
+               _id: $scope.folder.actual._id,
+               name: $scope.folder.actual.name
+           }
+
            var breadCrums = [];
 
             for (var i = 0; i < paths.length; i++){
@@ -48,6 +53,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                     breadCrums.push(pathWithName)
                 }
             }
+            breadCrums.push(lastPath);
+
             return breadCrums
         }
 
