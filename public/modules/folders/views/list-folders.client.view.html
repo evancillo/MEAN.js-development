@@ -18,6 +18,15 @@
                 Agregar
             </button>
         </div>
+        <div class="folder-agregar" ng-show="folder.path.length">
+            <input type="file" nv-file-select uploader="uploader"/><br/>
+            <ul>
+                <li ng-repeat="item in uploader.queue">
+                    Name: <span ng-bind="item.file.name"></span><br/>
+                    <button ng-click="item.upload()">upload</button>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="list-group">

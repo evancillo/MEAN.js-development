@@ -75,7 +75,7 @@ angular.module('folders').factory('FolderApi', ['$resource', function($resource)
         getRootFolder: function (userId, callback){
             var data = {userId: userId};
 
-            var resouce = $resource ('/folder/                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ', data);
+            var resouce = $resource ('/folder/getRootFolder', data);
 
             resouce.save (function(resp){
                 callback(resp);

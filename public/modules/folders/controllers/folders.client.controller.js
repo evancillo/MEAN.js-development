@@ -1,9 +1,10 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder','RootFolderObj','FolderApi','$filter',
-	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder, RootFolderObj, FolderApi, $filter ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder','RootFolderObj','FolderApi','$filter','FileUploader',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder, RootFolderObj, FolderApi, $filter,FileUploader ) {
 		$scope.authentication = Authentication;
+        $scope.uploader = new FileUploader();
 
         $scope.folder = {
             new : "",
