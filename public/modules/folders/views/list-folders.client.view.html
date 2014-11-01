@@ -46,7 +46,12 @@
                     <input type="text" class="form-control" readonly ng-model="uploader.queue[0].file.name">
                 </div>
                 <div class="btn-file-options-holder">
-                    <button ng-click="uploader.queue[0].upload()" class="btn btn-default">
+
+                    <button type="button" class="btn btn-default" ng-click="uploader.queue[0].remove()" ng-show="uploader.queue.length" >
+                        <span class="dms-icon-blocked"></span> Limpiar
+                    </button>
+
+                    <button  type="button" ng-click="uploader.queue[0].upload()" class="btn btn-success" ng-show="uploader.queue.length">
                         <span class="dms-icon-upload"></span>
                         Subir
                     </button>
