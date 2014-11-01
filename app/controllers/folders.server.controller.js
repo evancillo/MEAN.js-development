@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Folder = mongoose.model('Folder'),
+    fs = require('fs'),
 	_ = require('lodash');
 
 /**
@@ -87,6 +88,30 @@ exports.appendChildPOST = function (req, res){
 
     });
 }
+
+exports.uploadFile = function (req, res){
+
+    console.log ("TRATANDO UPLOAD req con busboy")
+
+    var fstream;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        console.log("Subiendo FILE: " + filename);
+        console.log("Dirname :"+__dirname + '/uploads/')
+
+        //Path where image will be uploaded
+      var fstream = fs.createWriteStream(__dirname + '/uploads/' + filename);
+        file.pipe(fstream);
+        fstream.on('close', function () {
+            console.log("Upload Finished of " + filename);
+            res.redirect('back');           //where to go next
+        });
+    });
+
+}
+
+
+
 
 exports.getFullTree = function(req, res){
     Folder.GetArrayTree(req.query.parentId, function(err, tree){

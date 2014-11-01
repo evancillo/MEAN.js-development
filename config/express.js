@@ -18,11 +18,24 @@ var express = require('express'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
-	path = require('path');
+    busboy = require('connect-busboy'),  // se agrega para soportar Uploading para express > 4
+	path = require('path'),
+    fs = require('fs');
 
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
+    app.use(busboy());
+
+    app.post('/file/upload2' , function(req, res){
+        console.log("HOLAAAA!! SE RECIBE UN FILE!");
+        res.send({
+            message: 'perfectirijillo',
+            status: 1
+        })
+    });
+
+
 
     app.use(require('browser-logger')());  //para ver el log en el Browser, retirar en prod
 

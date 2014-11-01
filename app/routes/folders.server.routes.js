@@ -29,6 +29,11 @@ module.exports = function(app) {
     app.route('/folder/getRootFolder')
         .post(folders.getRootFolder)
 
+    app.route('/file/upload')
+        .post(folders.uploadFile)
+
+
+
 
     app.route('/folder/user/:userId/folderName/:name')
         .get(folders.checkName)
