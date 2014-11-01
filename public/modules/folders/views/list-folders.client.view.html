@@ -1,5 +1,5 @@
 <section data-ng-controller="FoldersController">
-    <div class="page-header folder-header">
+    <div class="folder-header">
 
         <ul class="breadcrumb">
             <li ng-repeat='bc in breadcrumbs' ng-class="{'folder-bc-active': $last }">
@@ -8,28 +8,58 @@
             </li>
         </ul>
 
-        <div class="folder-agregar" ng-show="folder.path.length">
+
+    </div>
+
+    <div class="folder-options">
+        <div class="col-lg-6 col-sm-6 col-12" ng-show="folder.path.length">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Nombre" ng-model="folder.new">
+
+                <div class="input-group input-group-lg">
+
+                    <div class="icon-addon addon-lg">
+                        <input type="text" placeholder="Nombre de la Carpeta" class="form-control" ng-model="folder.new">
+                    </div>
+                    <span class="input-group-btn">
+                        <button class="btn btn-info folder-btn-add" type="button"  ng-click="appendChildFolder()">
+                            <span class="dms-icon-folder"></span>
+                            Agregar</button>
+                    </span>
+                </div>
+
             </div>
 
-            <button type="button" class="btn btn-success" ng-click="appendChildFolder()">
-                <span class="dms-icon-folder"></span>
-                Agregar
-            </button>
+
         </div>
-        <div class="folder-agregar" ng-show="folder.path.length">
-            <input type="file" nv-file-select uploader="uploader"/><br/>
-            <ul>
-                <li ng-repeat="item in uploader.queue">
-                    Name: <span ng-bind="item.file.name"></span><br/>
-                    <button ng-click="item.upload()">upload</button>
-                </li>
-            </ul>
+        <div ng-show="folder.path.length">
+            <div class="col-lg-6 col-sm-6 col-12">
+
+                <div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+
+                        <input type="file" nv-file-select uploader="uploader" >
+                        <span class="dms-icon-search"></span>
+                        Seleccionar
+                    </span>
+                </span>
+                    <input type="text" class="form-control" readonly ng-model="uploader.queue[0].file.name">
+                </div>
+                <div class="btn-file-options-holder">
+                    <button ng-click="uploader.queue[0].upload()" class="btn btn-default">
+                        <span class="dms-icon-upload"></span>
+                        Subir
+                    </button>
+                </div>
+
+
+            </div>
+
+
         </div>
     </div>
 
-    <div class="list-group">
+    <div class="list-group folder-list-group">
         <a data-ng-repeat="fold in folders | filter:{ parentId : folder.actual._id }" ng-click="goIntoFolder(fold)" class="list-group-item">
        <!-- <a data-ng-repeat="folder in folders" data-ng-href="#!/folders/{{folder._id}}" class="list-group-item"> -->
 			<!--<small class="list-group-item-text">
@@ -60,7 +90,7 @@
 
         </a>
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!folders.$resolved || folders.length">
+    <!-- <div class="alert alert-warning text-center" data-ng-hide="!folders.$resolved || folders.length">
     	No hay carpetas aún, por qué no creas una?
-    </div>
+    </div> -->
 </section>
