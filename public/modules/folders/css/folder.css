@@ -54,4 +54,12 @@ input[readonly] {
   background-color: white !important;
   cursor: text !important; }
 
+.folder-progressbar {
+  height: 5px; }
+  .folder-progressbar.ng-hide-add {
+    -webkit-animation: fadeOut 1s;
+    -moz-animation: fadeOut 1s;
+    -ms-animation: fadeOut 1s;
+    animation: fadeOut 1s; }
+
 /*# sourceMappingURL=folder.css.map */

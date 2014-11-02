@@ -8,7 +8,9 @@
             </li>
         </ul>
 
-
+        <div class="progress folder-progressbar" ng-hide="uploader.progress == 100 || uploader.progress == 0 || hideProgressbar()">
+            <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+        </div>
     </div>
 
     <div class="folder-options">

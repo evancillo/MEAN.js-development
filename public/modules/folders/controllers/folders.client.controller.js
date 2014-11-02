@@ -4,7 +4,9 @@
 angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder','RootFolderObj','FolderApi','$filter','FileUploader',
 	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder, RootFolderObj, FolderApi, $filter,FileUploader ) {
 		$scope.authentication = Authentication;
-        $scope.uploader = new FileUploader();
+        $scope.uploader = new FileUploader({
+            removeAfterUpload: true
+        });
 
         $scope.folder = {
             new : "",
@@ -15,7 +17,9 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         $scope.breadcrumbs = [];
         var visitedFolders = [];
 
-
+        $scope.uploader.onCompleteItem = function(fileItem, response, status, headers) {
+            console.info('onCompleteItem', fileItem, response, status, headers);
+        };
 
         function addToPathFolders (folder){
            var hasTheId = $filter('filter')(visitedFolders, function (d) {return d._id === folder._id;});
@@ -28,6 +32,10 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
         $scope.getVisitedFolders = function (){
             return visitedFolders;
+        }
+
+        $scope.hideProgressbar = function (){
+            return isNaN($scope.uploader.progress)
         }
 
         $scope.getBreadcrum = function(){
