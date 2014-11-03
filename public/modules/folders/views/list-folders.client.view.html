@@ -12,6 +12,10 @@
             <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
         </div>
     </div>
+    <div>
+        <alert class="todo-item" ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
+    </div>
 
     <div class="folder-options">
         <div class="col-lg-6 col-sm-6 col-12" ng-show="folder.path.length">

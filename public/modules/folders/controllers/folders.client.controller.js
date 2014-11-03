@@ -1,8 +1,8 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','FolderApi','$filter','FileUploader',
-	function($scope, $stateParams, $location, Authentication, Folders, $resource, FolderApi, $filter,FileUploader ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','FolderApi','$filter','FileUploader','$timeout',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource, FolderApi, $filter,FileUploader, $timeout ) {
 		$scope.authentication = Authentication;
         $scope.uploader = new FileUploader({
             removeAfterUpload: true
@@ -17,9 +17,42 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         $scope.breadcrumbs = [];
         var visitedFolders = [];
 
-        $scope.uploader.onCompleteItem = function(fileItem, response, status, headers) {
-            console.info('onCompleteItem', fileItem, response, status, headers);
+
+        /* Sección para Alert*/
+        $scope.alerts = [];
+        var alert = {
+            msg: 'Se agregó correctamente el directorio.',
+            type: 'success'
         };
+        alert.close = function(){
+            $scope.alerts.splice($scope.alerts.indexOf(this), 1);
+        }
+
+
+
+
+
+
+
+
+
+
+        $scope.uploader.onCompleteItem = function(fileItem, response, status, headers) {
+            //console.info('onCompleteItem', fileItem, response, status, headers);
+        };
+
+        $scope.uploader.onSuccessItem = function(item, response, status, headers){
+            var alertSuccess = {
+                type: 'success',
+                msg: 'Archivo subido correctamente'
+            }
+
+            $scope.alerts.push(alertSuccess);
+            $timeout(function(){
+                $scope.alerts.splice($scope.alerts.indexOf(alertSuccess), 1);
+            }, 2000); // maybe '}, 3000, false);' to avoid calling apply
+
+        }
 
         function addToPathFolders (folder){
            var hasTheId = $filter('filter')(visitedFolders, function (d) {return d._id === folder._id;});
@@ -145,6 +178,11 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                 console.log ("Se agrega Child ", resp);
                 $scope.folders.push(resp.data[0]);
                 $scope.folder.new="";
+                $scope.alerts.push(alert);
+                $timeout(function(){
+                    $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
+                }, 2000); // maybe '}, 3000, false);' to avoid calling apply
+
             })
         }
 
