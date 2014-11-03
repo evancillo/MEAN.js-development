@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Folder = mongoose.model('Folder'),
     fs = require('fs'),
+    mkdirp = require('mkdirp'),
 	_ = require('lodash');
 
 /**
@@ -95,18 +96,36 @@ exports.uploadFile = function (req, res){
 
     var fstream;
     req.pipe(req.busboy);
-    req.busboy.on('file', function (fieldname, file, filename) {
+
+    req.busboy.on('field', function(fieldname, val) {
+         console.log("se recibe FIELD", fieldname, val);
+        req.body[fieldname] = val;
+    });
+
+    req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
         console.log("Subiendo FILE: " + filename);
         console.log("Dirname :"+__dirname + '/uploads/')
+        console.log("file: ", file)
+        console.log("enconding: ", encoding)
+        console.log("mimeType: ", mimetype)
+        console.log("req.body", req.body)
 
-        //Path where image will be uploaded
-      var fstream = fs.createWriteStream(__dirname + '/uploads/' + filename);
-        file.pipe(fstream);
-        fstream.on('close', function () {
-            console.log("Upload Finished of " + filename);
-            res.redirect('back');           //where to go next
+        mkdirp('/opt/mean/public/uploads/'+req.body._id, function(err){
+            //Path where image will be uploaded
+            var fstream = fs.createWriteStream('/opt/mean/public/uploads/'+req.body._id+'/' + filename);
+            file.pipe(fstream);
+            fstream.on('close', function () {
+                console.log("Upload Finished of " + filename);
+                res.redirect('back');           //where to go next
+            });
         });
+
+
     });
+
+    req.busboy.on('finish', function(){
+        console.log("on Finish ", req.body)
+    })
 
 }
 

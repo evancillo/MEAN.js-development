@@ -1,8 +1,8 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','RootFolder','RootFolderObj','FolderApi','$filter','FileUploader',
-	function($scope, $stateParams, $location, Authentication, Folders, $resource, RootFolder, RootFolderObj, FolderApi, $filter,FileUploader ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','FolderApi','$filter','FileUploader',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource, FolderApi, $filter,FileUploader ) {
 		$scope.authentication = Authentication;
         $scope.uploader = new FileUploader({
             removeAfterUpload: true
@@ -68,8 +68,10 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         }
 
 
+        $scope.getCurrentFolder = function(){
+            return FolderApi.getCurrentFolder();
+        }
 
-        //$scope.folder = [];
 
         /*
 
@@ -95,40 +97,7 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
         */
 
-        /*
-        // agregar un nuevo directorio.
-         var  addNewFolder = function(callback){
-            if ($scope.folder.new != ""){
-                console.log("se crea nuevo folder con nombre: "+ $scope.folder.new)
 
-                var folder = new Folders ({
-                    name: $scope.folder.new
-                });
-
-                folder.$save(function(response){
-                    // limpia datos ingresados.
-                    console.log("Se guarda foler exitosamente. ", response)
-                    $scope.folder.new = ""
-                   // $scope.find();
-                     callback(response);
-
-                }, function(errorResponse){
-                    console.error("Error al guardar folder ", errorResponse)
-                });
-
-            }
-        }
-
-        function customUpdate(){
-            var folder = $scope.folder.actual;
-            folder.$update(function(resp){
-
-            }, function(errorResponse){
-                $scope.error = errorResponse.data.message;
-            })
-        }
-
-        */
 
         function customFindOne(folder, callback){
 
@@ -182,6 +151,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         $scope.goIntoFolder = function(folder){
             customFindOne(folder, function(resp){
                 console.log("Se recibe respuesta dentro del callback! ", resp);
+
+                FolderApi.setCurrentFolder(resp);
                 $scope.folder.actual = resp;
                 $scope.folder.path.push(folder.name);
 

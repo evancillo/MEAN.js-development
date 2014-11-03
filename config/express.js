@@ -25,7 +25,12 @@ var express = require('express'),
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
-    app.use(busboy());
+        app.use(busboy());
+    //  app.use(busboy({ immediate: true }));
+
+
+
+
 
     app.post('/file/upload2' , function(req, res){
         console.log("HOLAAAA!! SE RECIBE UN FILE!");

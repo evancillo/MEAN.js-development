@@ -23,6 +23,8 @@ angular.module('folders').factory('Folders', ['$resource',
 angular.module('folders').factory('FolderApi', ['$resource', function($resource){
 
 
+    var currentFolder = ""
+
 
     return {
 
@@ -80,7 +82,19 @@ angular.module('folders').factory('FolderApi', ['$resource', function($resource)
             resouce.save (function(resp){
                 callback(resp);
             })
+        },
+
+        setCurrentFolder: function (folder){
+            currentFolder = folder;
+        },
+
+        getCurrentFolder: function (){
+           return currentFolder;
         }
+
+
+
+
 
     }
 
