@@ -101,7 +101,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
            var lastPath = {
                _id: $scope.folder.actual._id,
-               name: $scope.folder.actual.name
+               name: $scope.folder.actual.name,
+               type: $scope.folder.actual.type
            }
 
            var breadCrums = [];
@@ -113,7 +114,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
                     var pathWithName = {
                         _id : folder._id,
-                        name: folder.name
+                        name: folder.name,
+                        type: folder.type
                     }
 
                     breadCrums.push(pathWithName)
@@ -237,6 +239,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         }
 
         $scope.goIntoFolder = function(folder){
+
+            if (folder.type != "folder") return;
             customFindOne(folder, function(resp){
                 console.log("Se recibe respuesta dentro del callback! ", resp);
 
