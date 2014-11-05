@@ -158,7 +158,7 @@ exports.uploadFile = function (req, res){
                 // console.log("AHORA SI folder actualizado", fold);
                  res.send({
                     msg:'se agrega file correctamente',
-                    folder: fold,
+                    folder: fileModel,
                     status: 1
                 })
 

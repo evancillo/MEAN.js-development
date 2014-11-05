@@ -69,6 +69,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                 msg: 'Archivo subido correctamente'
             }
 
+            $scope.folders.push(response.folder);
+
             $scope.alerts.push(alertSuccess);
             $timeout(function(){
                 $scope.alerts.splice($scope.alerts.indexOf(alertSuccess), 1);
