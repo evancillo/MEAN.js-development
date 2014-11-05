@@ -71,7 +71,7 @@
     </div>
 
     <div class="list-group folder-list-group">
-        <a data-ng-repeat="fold in folders | filter:{ parentId : folder.actual._id }" ng-click="goIntoFolder(fold)" class="list-group-item">
+        <a data-ng-repeat="fold in folders | filter:filterFolderList" ng-click="goIntoFolder(fold)" class="list-group-item ">
        <!-- <a data-ng-repeat="folder in folders" data-ng-href="#!/folders/{{folder._id}}" class="list-group-item"> -->
 			<!--<small class="list-group-item-text">
 				Posted on

@@ -84,6 +84,22 @@ angular.module('folders').factory('FolderApi', ['$resource', function($resource)
             })
         },
 
+        removeAllFolders: function (callback){
+            var resource = $resource ('/folder/removeAllFolders')
+
+            resource.save (function(resp){
+                callback(resp);
+            })
+        },
+
+        removeAllFiles: function (callback){
+            var resource = $resource ('/file/removeAllFiles')
+
+            resource.save(function(resp){
+                callback(resp)
+            })
+        },
+
         setCurrentFolder: function (folder){
             currentFolder = folder;
         },

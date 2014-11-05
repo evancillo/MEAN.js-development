@@ -17,11 +17,15 @@ var FileSchema = new Schema ({
         type: String,
         unique: true
     },
+
     name:{
         type: String,
-        trim: true,
         required: true
     },
+    visibleName:{
+        type: String
+    },
+
     created:{
         type: Date,
         default: Date.now
@@ -41,12 +45,13 @@ var FileSchema = new Schema ({
         default: 1
     },
     size:{
-        type: String,
-        trim: true
+        type: Number
+       // trim: true
     }
 });
 
-FileSchema.pre('save', function(){
+
+FileSchema.pre('save', function(next){
     this.uuid = uuid.v1();
     next();
 });

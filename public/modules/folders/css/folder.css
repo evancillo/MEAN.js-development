@@ -1,3 +1,21 @@
+.type-excel {
+  color: #326e49 !important; }
+
+.type-word {
+  color: #2469a9 !important; }
+
+.type-ppt {
+  color: #c94819 !important; }
+
+.type-pdf {
+  color: #b41300 !important; }
+
+.type-img {
+  color: #58b9b2 !important; }
+
+.type-file {
+  color: #c7c6c7 !important; }
+
 .folder-agregar {
   max-width: 320px; }
   .folder-agregar > div {
@@ -26,6 +44,12 @@
 
 .folder-list-group {
   margin-top: 10px; }
+
+.folder-item.ng-enter {
+  -webkit-animation: lightSpeedIn 1s;
+  -moz-animation: lightSpeedIn 1s;
+  -ms-animation: lightSpeedIn 1s;
+  animation: lightSpeedIn 1s; }
 
 .folder-btn-add {
   height: 34px !important;

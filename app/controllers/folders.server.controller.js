@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Folder = mongoose.model('Folder'),
+    File = mongoose.model('File'),
     fs = require('fs'),
     mkdirp = require('mkdirp'),
 	_ = require('lodash');
@@ -27,6 +28,24 @@ exports.create = function(req, res) {
 		}
 	});
 };
+
+exports.removeAllFiles = function (req, res){
+    var files = File.find().remove();
+    files.exec();
+
+    res.send({
+       msg: 'se borran todos los archivos'
+    })
+}
+exports.removeAllFolders = function (req, res){
+    var folders = Folder.find().remove();
+    folders.exec();
+
+    res.send({
+        msg: 'se borran los directorios'
+    })
+}
+
 
 
 exports.appendChild = function (req, res){
@@ -91,8 +110,9 @@ exports.appendChildPOST = function (req, res){
 }
 
 exports.uploadFile = function (req, res){
-
-    console.log ("TRATANDO UPLOAD req con busboy")
+    /*
+    var query = File.find().remove();
+    query.exec(); */
 
     var fstream;
     req.pipe(req.busboy);
@@ -103,29 +123,69 @@ exports.uploadFile = function (req, res){
     });
 
     req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-        console.log("Subiendo FILE: " + filename);
-        console.log("Dirname :"+__dirname + '/uploads/')
-        console.log("file: ", file)
-        console.log("enconding: ", encoding)
+        console.log("Subiendo FILE: " + filename)
         console.log("mimeType: ", mimetype)
         console.log("req.body", req.body)
+        console.log("req.headers ", req.headers)
+
+        var fileModel = new File({
+            name: filename,
+            visibleName: filename,
+            type: mimetype,
+            url: req.headers.origin+ '/uploads/'+req.body._id+'/' + filename,
+            size: req.headers['content-length']
+        });
+
+
+        fileModel.save(function(err){
+            if (err) console.log("error en save fileModel ", err) ;
+            console.log ("********** Se guarda fileModel ", fileModel)
+        });
+
+        Folder.findById(req.body._id, function(err, folder){
+            if (err) console.log("error en findById folder ", err);
+
+            folder.files.push(fileModel);
+            folder.save();
+
+        });
+
+        Folder.findById(req.body._id)
+            .populate('files')
+            .exec( function(err, fold){
+                if (err) console.log("error en populate ", err) ;
+
+                // console.log("AHORA SI folder actualizado", fold);
+                 res.send({
+                    msg:'se agrega file correctamente',
+                    folder: fold,
+                    status: 1
+                })
+
+            });
+
+
 
         mkdirp('/opt/mean/public/uploads/'+req.body._id, function(err){
             //Path where image will be uploaded
             var fstream = fs.createWriteStream('/opt/mean/public/uploads/'+req.body._id+'/' + filename);
             file.pipe(fstream);
-            fstream.on('close', function () {
-                console.log("Upload Finished of " + filename);
-                res.redirect('back');           //where to go next
-            });
+           /* fstream.on('close', function () {
+               // console.log("Upload Finished of " + filename);
+                 res.redirect('back');          //where to go next
+            }); */
         });
 
 
-    });
 
+
+    });
+    /*
     req.busboy.on('finish', function(){
-        console.log("on Finish ", req.body)
-    })
+
+
+
+    }); */
 
 }
 
@@ -185,14 +245,39 @@ exports.getFolderChildren = function (req, res){
                        data:[]
                    })
                } else{
-                   return res.send({
-                       message: 'Se envían Children',
-                       status: 1,
-                       data: childs
-                   })
+                   /*
+                   var populateChilds = [];
+
+                   for (var i = 0; i < childs.length; i++){
+
+                       Folder.findById(childs[i]._id)
+                           .populate('files')
+                           .exec( function(err, fold){
+                               if (err) console.log("error en populate ", err) ;
+
+                               populateChilds.push(fold);
+
+                           });
+                   } */
+                   Folder.findById(req.query.parentId)
+                       .populate('files')
+                       .exec(function(err, folder){
+                           if (err) console.log("error en populate ", err);
+
+                           console.log("Folder populado ", folder);
+
+                           for (var i = 0; i < folder.files.length; i++){
+                               childs.push(folder.files[i]);
+                           }
+
+                           return res.send({
+                               message: 'Se envían Children populados :D',
+                               status: 1,
+                               data: childs
+                           })
+
+                       });
                }
-
-
            })
         }
     });

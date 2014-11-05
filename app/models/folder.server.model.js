@@ -43,13 +43,18 @@ var FolderSchema = new Schema({
             type: Schema.ObjectId,
             ref: 'Folder'
         }
-    ]/*,
+    ],
+    files:[
+        {
+            type: Schema.ObjectId,
+            ref: 'File'
+        }
+    ]
+    /*,
     permissions:{
         type: [Permission]
     },
-    files:{
-        type: [File]
-    } */
+     */
 });
 
 FolderSchema.plugin(materializedPlugin);

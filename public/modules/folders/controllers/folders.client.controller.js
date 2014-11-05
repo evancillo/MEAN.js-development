@@ -30,9 +30,31 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
 
 
+        $scope.removeAllFiles = function(){
+            FolderApi.removeAllFiles (function(resp){
+                console.log("Se borran todos los archivos: ", resp);
+            });
+        };
 
+        $scope.removeAllFolders = function(){
+            FolderApi.removeAllFolders(function(resp){
+                console.log("Se borran todos los folders: ", resp)
+            });
+        };
 
+        $scope.filterFolderList = function(item){
+            if (item.type!="folder")
+                return true;
 
+           if(typeof $scope.folder.actual._id == "undefined"){
+               return true;
+           }
+           else{
+               if(item.parentId == $scope.folder.actual._id)
+                   return true;
+               return false;
+           }
+        }
 
 
 
@@ -146,6 +168,30 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                 case 'folder':
                     return "dms-icon-folder"
                     break;
+                case 'image/png':
+                    return "dms-icon-file-photo-o type-img"
+                    break;
+                case 'image/jpeg':
+                    return "dms-icon-file-photo-o type-img"
+                    break;
+                case 'application/msword':
+                    return "dms-icon-file-word-o type-word"
+                    break;
+                case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                    return "dms-icon-file-word-o type-word"
+                    break;
+                case 'application/pdf':
+                    return "dms-icon-file-pdf-o type-pdf"
+                    break;
+                case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                    return "dms-icon-file-excel-o type-excel"
+                    break;
+                case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+                    return "dms-icon-file-powerpoint-o type-ppt"
+                    break;
+                default :
+                    return "dms-icon-file-o type-file"
+                    break;
 
             }
         }
@@ -178,10 +224,12 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                 console.log ("Se agrega Child ", resp);
                 $scope.folders.push(resp.data[0]);
                 $scope.folder.new="";
+
+                /*
                 $scope.alerts.push(alert);
                 $timeout(function(){
                     $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
-                }, 2000); // maybe '}, 3000, false);' to avoid calling apply
+                }, 2000); // maybe '}, 3000, false);' to avoid calling apply */
 
             })
         }
