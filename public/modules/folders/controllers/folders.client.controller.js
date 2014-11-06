@@ -193,6 +193,15 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                 case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
                     return "dms-icon-file-powerpoint-o type-ppt"
                     break;
+                case "audio/mpeg":
+                    return "dms-icon-file-sound-o type-mp3"
+                    break;
+                case "video/mp4":
+                    return "dms-icon-file-movie-o type-mp4"
+                    break;
+                case "text/javascript":
+                    return "dms-icon-file-css type-file"
+                    break;
                 default :
                     return "dms-icon-file-o type-file"
                     break;

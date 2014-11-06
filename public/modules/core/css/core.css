@@ -72,5 +72,17 @@
     .home-expli > div span:nth-child(3) {
       font-size: 18px;
       text-align: justify; }
+  @media all and (max-width: 1100px) {
+    .home-expli > div {
+      min-width: 290px;
+      max-width: 300px; }
+      .home-expli > div .div-icon {
+        margin-bottom: 70px; }
+        .home-expli > div .div-icon > {
+          font-size: 44px; }
+      .home-expli > div span:nth-child(2) {
+        font-size: 22px; }
+      .home-expli > div span:nth-child(3) {
+        font-size: 16px; } }
 
 /*# sourceMappingURL=core.css.map */

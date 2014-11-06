@@ -50,11 +50,15 @@ var FolderSchema = new Schema({
             ref: 'File'
         }
     ]
-    /*,
-    permissions:{
-        type: [Permission]
-    },
-     */
+    ,
+    permissions:[
+        {
+        type: Schema.ObjectId,
+        ref: 'Permission'
+        }
+    ]
+
+
 });
 
 FolderSchema.plugin(materializedPlugin);
