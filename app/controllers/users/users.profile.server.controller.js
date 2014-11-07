@@ -54,3 +54,26 @@ exports.update = function(req, res) {
 exports.me = function(req, res) {
 	res.jsonp(req.user || null);
 };
+
+/**
+ * get All Users
+*/
+exports.getAllUsers = function (req, res){
+
+    User.find(function(err, users){
+        if (err){
+            return err
+        }
+        else{
+
+          res.send({
+              msg: 'Lista de Usuarios Registrados',
+              status: 1,
+              users: users
+          })
+        }
+
+
+
+    });
+}

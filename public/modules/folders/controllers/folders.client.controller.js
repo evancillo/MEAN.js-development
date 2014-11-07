@@ -1,12 +1,16 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','FolderApi','$filter','FileUploader','$timeout',
-	function($scope, $stateParams, $location, Authentication, Folders, $resource, FolderApi, $filter,FileUploader, $timeout ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','FolderApi','$filter','FileUploader','$timeout','UsersHandsOn',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource, FolderApi, $filter,FileUploader, $timeout, UsersHandsOn ) {
 		$scope.authentication = Authentication;
         $scope.uploader = new FileUploader({
             removeAfterUpload: true
         });
+
+        UsersHandsOn.getAllUsers(function(resp){
+            $scope.userList = resp;
+        })
 
         $scope.folder = {
             new : "",
@@ -202,6 +206,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                 case "text/javascript":
                     return "dms-icon-file-css type-file"
                     break;
+                case "text/html":
+                    return "dms-icon-file-code-o type-file"
                 default :
                     return "dms-icon-file-o type-file"
                     break;
@@ -224,8 +230,13 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
         function getRootFolder(){
             FolderApi.getRootFolder($scope.authentication.user._id, function(resp){
-               $scope.folders = resp.data;
-               $scope.folder.root = resp.data[0];
+               var response = resp.data;
+                response[0].name = "Home"
+
+               $scope.folders = response;
+               $scope.folder.root = response[0];
+
+               $scope.goIntoFolder(response[0]);
             });
         }
         getRootFolder();
@@ -250,9 +261,10 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         $scope.goIntoFolder = function(folder){
 
             if (folder.type != "folder") return;
+            $scope.folders.length = 0;
             customFindOne(folder, function(resp){
-                console.log("Se recibe respuesta dentro del callback! ", resp);
-
+                if (resp._id == $scope.folder.root._id)
+                    resp.name = "Home"
                 FolderApi.setCurrentFolder(resp);
                 $scope.folder.actual = resp;
                 $scope.folder.path.push(folder.name);

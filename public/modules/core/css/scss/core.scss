@@ -1,6 +1,38 @@
 $color-01: #406474;
 $color-02: #E35B43;
 
+.navbar-img{
+  width: 50px;
+  position: relative;
+  left: -5px;
+  top: -13px;
+  float: left;
+
+
+  &.ng-hide-add-active{
+    -webkit-transition:fadeOutUp 1s;
+    -moz-transition: fadeOutUp 1s;
+    -o-transition:fadeOutUp 1s;
+    transition:fadeOutUp 1s;
+  }
+  /*
+  &.ng-hide-add-active{
+    -webkit-transition:all linear 0.5s;
+    -moz-transition:all linear 0.5s;
+    -o-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+    opacity: 0;
+  } */
+
+  &.ng-hide-remove{
+    -webkit-animation: fadeInDown 1s;
+    -moz-animation: fadeInDown 1s;
+    -ms-animation: fadeInDown 1s;
+    animation: fadeInDown 1s;
+  }
+
+}
+
 .header-mh{
   min-height: 61px;
 }

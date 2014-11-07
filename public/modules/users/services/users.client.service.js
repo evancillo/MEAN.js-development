@@ -10,3 +10,18 @@ angular.module('users').factory('Users', ['$resource',
 		});
 	}
 ]);
+
+angular.module('users').factory ('UsersHandsOn', ['$resource', function($resource){
+
+    return {
+
+        getAllUsers : function(callback){
+            var resourse = $resource('/users/getAllUsers');
+
+            resourse.save(function(resp){
+               callback(resp)
+            });
+        }
+    }
+
+}]);

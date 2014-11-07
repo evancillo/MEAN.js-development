@@ -48,13 +48,27 @@ ApplicationConfiguration.registerModule('core');'use strict';
 ApplicationConfiguration.registerModule('users');'use strict';
 // Configuring the Articles module
 angular.module('articles').run([
-  'Menus',
-  function (Menus) {
+  'Menus', '$rootScope',
+  function (Menus, $rootScope) {
     // Set top bar menu items
     Menus.addMenuItem('topbar', 'Articles', 'articles', 'dropdown', '/articles(/create)?');
     Menus.addSubMenuItem('topbar', 'articles', 'List Articles', 'articles');
     Menus.addSubMenuItem('topbar', 'articles', 'New Article', 'articles/create');
+
+      $rootScope.$on('$routeChangeSuccess', function(ev,data) {
+          if (data.$route && data.$route.controller){
+              console.log("HOLA MUNDO HELL YEAH!!! THIS IS YOUR CONTROLLER!: ", data.$route.controller);
+              $rootScope.controller = data.$route.controller;
+          }
+
+
+      })
+
+
   }
+
+
+
 ]);'use strict';
 // Setting up route
 angular.module('articles').config([
