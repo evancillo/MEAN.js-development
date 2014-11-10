@@ -60,6 +60,10 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
            }
         }
 
+        $scope.deleteItem = function(item){
+            console.log("Se borra item")
+        }
+
 
 
 

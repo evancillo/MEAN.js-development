@@ -80,34 +80,34 @@
     vertical-align: top;
     min-height: 405px; }
     .home-expli > div .div-icon {
-      margin-bottom: 80px;
+      margin-bottom: 40px;
       padding-top: 80px; }
       .home-expli > div .div-icon > span {
-        font-size: 50px;
+        font-size: 80px;
         padding: 55px;
         border-radius: 50%;
-        background-color: #406474;
-        color: #f5f5f5; }
+        color: darkgray; }
     .home-expli > div > span {
       display: inline-block; }
     .home-expli > div span:nth-child(2) {
-      color: #E35B43;
-      font-size: 24px;
+      color: #ff6000;
+      font-size: 34px;
       margin-bottom: 16px; }
     .home-expli > div span:nth-child(3) {
-      font-size: 18px;
-      text-align: justify; }
+      font-size: 16px;
+      text-align: justify;
+      color: #7d7d7d; }
   @media all and (max-width: 1100px) {
     .home-expli > div {
       min-width: 290px;
       max-width: 300px; }
       .home-expli > div .div-icon {
-        margin-bottom: 70px; }
+        margin-bottom: 30px; }
         .home-expli > div .div-icon > {
           font-size: 44px; }
       .home-expli > div span:nth-child(2) {
-        font-size: 22px; }
+        font-size: 26px; }
       .home-expli > div span:nth-child(3) {
-        font-size: 16px; } }
+        font-size: 14px; } }
 
 /*# sourceMappingURL=core.css.map */
