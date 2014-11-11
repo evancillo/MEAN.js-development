@@ -23,6 +23,11 @@
     -ms-animation: fadeInDown 1s;
     animation: fadeInDown 1s; }
 
+.custom-nav {
+  background-image: none;
+  background-color: #333;
+  color: #fff; }
+
 .header-mh {
   min-height: 61px; }
 
@@ -47,6 +52,9 @@
   text-align: center;
   width: 100%;
   color: #f5f5f5; }
+  @media all and (max-width: 450px) {
+    .home-logo {
+      padding: 50px; } }
   .home-logo > div {
     display: inline-block; }
   .home-logo div:nth-child(1) > span {
@@ -62,7 +70,8 @@
 
 .home-bg-img {
   background-color: #406474;
-  background: url("/modules/core/img/brand/background.jpg"); }
+  background: url("/modules/core/img/brand/background.jpg");
+  transform: translateZ(-200px) scale(2); }
 
 .home-expli {
   text-align: center;
@@ -86,7 +95,7 @@
         font-size: 80px;
         padding: 55px;
         border-radius: 50%;
-        color: darkgray; }
+        color: #c1c1c1; }
     .home-expli > div > span {
       display: inline-block; }
     .home-expli > div span:nth-child(2) {

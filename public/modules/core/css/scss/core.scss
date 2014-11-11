@@ -2,6 +2,7 @@ $color-01: #406474;
 $color-02: #ff6000;
 $color-03: #7d7d7d;
 $color-04: #ff8e3e;
+$navbar-bg: #333;
 
 .navbar-img{
   width: 50px;
@@ -35,6 +36,12 @@ $color-04: #ff8e3e;
 
 }
 
+.custom-nav{
+  background-image: none;
+  background-color: $navbar-bg;
+  color: #fff;
+}
+
 .header-mh{
   min-height: 61px;
 }
@@ -60,6 +67,10 @@ $color-04: #ff8e3e;
   width: 100%;
   color: #f5f5f5;
 
+  @media all and (max-width: 450px) {
+    padding: 50px;
+  }
+
   >div{
     display: inline-block;
   }
@@ -84,6 +95,7 @@ $color-04: #ff8e3e;
 .home-bg-img{
   background-color: $color-01;
   background: url("/modules/core/img/brand/background.jpg");
+  transform: translateZ(-200px) scale(2);
 }
 
 .home-expli{
@@ -110,7 +122,7 @@ $color-04: #ff8e3e;
         padding: 55px;
         border-radius: 50%;
         //background-color: $color-01;
-        color: darkgray;
+        color: #c1c1c1;
       }
     }
 

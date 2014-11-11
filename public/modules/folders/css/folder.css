@@ -27,6 +27,9 @@
   .folder-agregar > div {
     display: inline-block; }
 
+.row-flex {
+  display: flex; }
+
 .folder-header {
   padding: 20px; }
 
@@ -107,5 +110,14 @@ input[readonly] {
     -moz-animation: bounceOut 1s;
     -ms-animation: bounceOut 1s;
     animation: bounceOut 1s; }
+
+.del-item:hover {
+  color: #ff8e3e !important; }
+
+.folder-row-mh {
+  min-height: 42px; }
+
+.ta-center {
+  text-align: center; }
 
 /*# sourceMappingURL=folder.css.map */
