@@ -189,8 +189,43 @@ exports.uploadFile = function (req, res){
 
 }
 
+exports.removeFolder = function (req, res){
+
+}
+exports.removeFile = function (req, res){
+
+    Folder.findById(req.query.parentId, function(err, doc){
+
+        if (!doc){
+            res.send({
+                msg: 'no se encuentra folder',
+                status: 0
+            })
+        }else{
+
+            var index = doc.files.indexOf(req.query._id);
+            doc.files.splice(index, 1);
+            doc.save();
 
 
+            res.send({
+                msg: 'se borra file 3',
+                status: 1,
+                children: doc.files,
+                file: req.query._id
+            });
+
+            fs.unlink('/opt/mean/public/uploads/'+req.query.parentId+'/'+req.query.name, function(err, path){
+                if (err){
+
+                }else{
+                    console.log("archivo borrado ", path);
+                }
+            });
+
+        }
+    })
+}
 
 exports.getFullTree = function(req, res){
     Folder.GetArrayTree(req.query.parentId, function(err, tree){

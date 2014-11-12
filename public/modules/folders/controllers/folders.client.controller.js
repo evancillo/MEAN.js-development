@@ -61,7 +61,24 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         }
 
         $scope.deleteItem = function(item){
-            console.log("Se borra item")
+
+            item['parentId'] = $scope.folder.actual._id;
+            FolderApi.removeItem(item, function(resp){
+                console.log(resp);
+
+                var index = $scope.folders.map(function(x) {return x._id; }).indexOf(resp.file);
+                $scope.folders.splice(index, 1);
+
+                var alertSuccess = {
+                    type: 'success',
+                    msg: 'Archivo eliminado correctamente'
+                }
+
+                $scope.alerts.push(alertSuccess);
+                $timeout(function(){
+                    $scope.alerts.splice($scope.alerts.indexOf(alertSuccess), 1);
+                }, 2000); // maybe '}, 3000, false);' to avoid calling apply
+            });
         }
 
 

@@ -106,6 +106,23 @@ angular.module('folders').factory('FolderApi', ['$resource', function($resource)
 
         getCurrentFolder: function (){
            return currentFolder;
+        },
+
+        removeItem: function(item, callback){
+
+            console.log("ITEEEEEM!! a borrar ", item);
+
+            var resource = ""
+            if (item.type == "folder"){
+                resource = $resource ('/folder/removeFolder', item);
+
+            }else{
+                resource = $resource ('/file/removeFile', item);
+            }
+
+            resource.save(function(resp){
+                callback(resp)
+            })
         }
 
 

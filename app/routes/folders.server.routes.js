@@ -38,6 +38,12 @@ module.exports = function(app) {
     app.route('/file/removeAllFiles')
         .post(folders.removeAllFiles)
 
+    app.route('/folder/removeFolder')
+        .post(folders.removeFolder)
+
+    app.route('/file/removeFile')
+        .post(folders.removeFile)
+
 
 
 
