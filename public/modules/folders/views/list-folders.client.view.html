@@ -88,14 +88,12 @@
               <div class="col-xs-1 folder-icon-mw" ng-click="goIntoFolder(fold)">
                   <span class="folder-list-icon" ng-class="setIcon(fold.type)"></span>
               </div>
-              <div class="col-xs-8 col-sm-9 folder-row-mh" ng-click="goIntoFolder(fold)">
+              <div class="col-xs-9 col-sm-10 folder-row-mh" ng-click="goIntoFolder(fold)">
                   <span data-ng-bind="fold.name"></span>
               </div>
-              <div class="col-xs-1 folder-row-mh ta-center">
-                  <span class="folder-icon-mw dms-icon-edit"></span>
-              </div>
-              <div class="col-xs-1 del-item folder-row-mh ta-center" ng-click="deleteItem(fold)">
-                  <span class="folder-icon-mw dms-icon-close"></span>
+
+              <div class="col-xs-1 del-item folder-row-mh ta-center" ng-click="folderModal(fold)">
+                  <span class="folder-icon-mw dms-icon-enter"></span>
               </div>
           </div>
 

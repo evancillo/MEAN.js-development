@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	Folder = mongoose.model('Folder'),
     File = mongoose.model('File'),
     fs = require('fs'),
+    rmdir = require('rimraf'),
     mkdirp = require('mkdirp'),
 	_ = require('lodash');
 
@@ -49,12 +50,6 @@ exports.removeAllFolders = function (req, res){
 
 
 exports.appendChild = function (req, res){
-
-    console.log ("Se llama a appendChild con params", req.params);
-
-
-
-
 
     res.send({
         message: "response correcto!"
@@ -191,6 +186,71 @@ exports.uploadFile = function (req, res){
 
 exports.removeFolder = function (req, res){
 
+    Folder.findById(req.query._id, function(err, doc){
+
+        if (err){
+            return  res.send({
+                msg:'hubo un error al intentar borrar',
+                status: 0
+
+            })
+
+        }
+
+        doc.getChildren(function(err, children){
+
+            if (err){
+                return  res.send({
+                    msg:'hubo un error al intentar borrar',
+                    status: 0
+                })
+            }
+
+            if (!children)
+                console.log('No children que borrar');
+
+            if (children){
+                for (var i = 0; i < children.length; i++){
+                    var folder = children[i];
+                    for(var j = 0; j< folder.files.length; j++){
+                        File.findByIdAndRemove(folder.files[j]._id, function(err){
+                        })
+                    }
+                    Folder.findById(folder._id, function(err, doc){
+                        if (err)
+                            console.log("error al borrar children");
+                        doc.remove();
+                    });
+                    rmdir('/opt/mean/public/uploads/'+folder._id, function(err){
+                       if (err)
+                           console.log('error al borrar el directorio físico id: ', folder._id)
+                    })
+                }
+            }
+        })
+
+
+        for (var i = 0; i < doc.files.length; i++){
+            File.findByIdAndRemove(doc.files[i]._id, function(err){
+            })
+        }
+
+        doc.remove();
+
+        rmdir('/opt/mean/public/uploads/'+req.query._id, function(err){
+            if (err) console.log('error al borrar el directorio fisico padre id')
+
+        })
+
+        res.send({
+            mgs: 'borrando folder and children and its files',
+            status: 1,
+            file: req.query._id
+        })
+
+    })
+
+
 }
 exports.removeFile = function (req, res){
 
@@ -222,6 +282,10 @@ exports.removeFile = function (req, res){
                     console.log("archivo borrado ", path);
                 }
             });
+
+            File.findByIdAndRemove(req.query._id, function(err){
+
+            })
 
         }
     })

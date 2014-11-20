@@ -118,6 +118,7 @@ input[readonly] {
   min-height: 42px; }
 
 .ta-center {
-  text-align: center; }
+  text-align: center;
+  font-size: 22px; }
 
 /*# sourceMappingURL=folder.css.map */

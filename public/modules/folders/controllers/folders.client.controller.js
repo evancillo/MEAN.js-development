@@ -1,8 +1,8 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','FolderApi','$filter','FileUploader','$timeout','UsersHandsOn',
-	function($scope, $stateParams, $location, Authentication, Folders, $resource, FolderApi, $filter,FileUploader, $timeout, UsersHandsOn ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','FolderApi','$filter','FileUploader','$timeout','UsersHandsOn','$modal',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource, FolderApi, $filter,FileUploader, $timeout, UsersHandsOn, $modal ) {
 		$scope.authentication = Authentication;
         $scope.uploader = new FileUploader({
             removeAfterUpload: true
@@ -22,6 +22,7 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         var visitedFolders = [];
 
 
+        //<editor-fold desc="Alert">
         /* Sección para Alert*/
         $scope.alerts = [];
         var alert = {
@@ -31,20 +32,11 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
         alert.close = function(){
             $scope.alerts.splice($scope.alerts.indexOf(this), 1);
         }
+        //</editor-fold>
 
 
 
-        $scope.removeAllFiles = function(){
-            FolderApi.removeAllFiles (function(resp){
-                console.log("Se borran todos los archivos: ", resp);
-            });
-        };
 
-        $scope.removeAllFolders = function(){
-            FolderApi.removeAllFolders(function(resp){
-                console.log("Se borran todos los folders: ", resp)
-            });
-        };
 
         $scope.filterFolderList = function(item){
             if (item.type!="folder")
@@ -71,7 +63,7 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
                 var alertSuccess = {
                     type: 'success',
-                    msg: 'Archivo eliminado correctamente'
+                    msg: 'eliminado correctamente'
                 }
 
                 $scope.alerts.push(alertSuccess);
@@ -80,9 +72,6 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                 }, 2000); // maybe '}, 3000, false);' to avoid calling apply
             });
         }
-
-
-
 
         $scope.uploader.onCompleteItem = function(fileItem, response, status, headers) {
             //console.info('onCompleteItem', fileItem, response, status, headers);
@@ -236,9 +225,6 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
             }
         }
 
-
-
-
         function getFullTree (parentId){
             FolderApi.getFullTree(parentId)
         }
@@ -300,6 +286,27 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
 
 
+        //<editor-fold desc="Logica del Folders Modal">
+        $scope.folderModal = function (item) {
+
+            var modalInstance = $modal.open({
+                templateUrl: 'modules/folders/views/modal.folder.client.view.html',
+                controller: 'ModalFoldersController',
+                size: 'lg',
+                resolve: {
+                    folderItem: function () {
+                        return item;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+        //</editor-fold>
 
 
 
@@ -311,12 +318,22 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
 
 
+        //<editor-fold desc="Metodos Privados, no publicar">
+        $scope.removeAllFiles = function(){
+            FolderApi.removeAllFiles (function(resp){
+                console.log("Se borran todos los archivos: ", resp);
+            });
+        };
 
+        $scope.removeAllFolders = function(){
+            FolderApi.removeAllFolders(function(resp){
+                console.log("Se borran todos los folders: ", resp)
+            });
+        };
+        //</editor-fold>
 
-
-
-
-		// Create new Folder
+        //<editor-fold desc="Logica del boilplate, sin usar">
+        // Create new Folder
 		$scope.create = function() {
 			// Create new Folder object
 
@@ -375,6 +392,7 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 				folderId: $stateParams.folderId
 			});
 		};
+        //</editor-fold>
 
 
 
