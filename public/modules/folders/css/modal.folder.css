@@ -1,0 +1,15 @@
+.modal-file-icon {
+  font-size: 70px; }
+
+.modal-file {
+  display: block; }
+  .modal-file > div {
+    display: inline-block; }
+  .modal-file > .desc {
+    font-weight: 200; }
+    .modal-file > .desc > table > tbody > tr td:nth-child(3) {
+      padding-left: 20px; }
+    .modal-file > .desc > div span:nth-child(2) {
+      color: #777; }
+
+/*# sourceMappingURL=modal.folder.css.map */

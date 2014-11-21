@@ -1,9 +1,11 @@
 'use strict';
 
 // Folders controller
-angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','FolderApi','$filter','FileUploader','$timeout','UsersHandsOn','$modal',
-	function($scope, $stateParams, $location, Authentication, Folders, $resource, FolderApi, $filter,FileUploader, $timeout, UsersHandsOn, $modal ) {
+angular.module('folders').controller('FoldersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Folders','$resource','FolderApi','$filter','FileUploader','$timeout','UsersHandsOn','$modal','FileProperty',
+	function($scope, $stateParams, $location, Authentication, Folders, $resource, FolderApi, $filter,FileUploader, $timeout, UsersHandsOn, $modal, FileProperty ) {
 		$scope.authentication = Authentication;
+        $scope.fileProperty = FileProperty;
+
         $scope.uploader = new FileUploader({
             removeAfterUpload: true
         });
@@ -140,7 +142,6 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
             return breadCrums
         }
 
-
         $scope.getCurrentFolder = function(){
             return FolderApi.getCurrentFolder();
         }
@@ -181,50 +182,6 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
              });
         }
 
-        $scope.setIcon = function (type){
-            switch (type){
-                case 'folder':
-                    return "dms-icon-folder"
-                    break;
-                case 'image/png':
-                    return "dms-icon-file-photo-o type-img"
-                    break;
-                case 'image/jpeg':
-                    return "dms-icon-file-photo-o type-img"
-                    break;
-                case 'application/msword':
-                    return "dms-icon-file-word-o type-word"
-                    break;
-                case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                    return "dms-icon-file-word-o type-word"
-                    break;
-                case 'application/pdf':
-                    return "dms-icon-file-pdf-o type-pdf"
-                    break;
-                case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                    return "dms-icon-file-excel-o type-excel"
-                    break;
-                case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-                    return "dms-icon-file-powerpoint-o type-ppt"
-                    break;
-                case "audio/mpeg":
-                    return "dms-icon-file-sound-o type-mp3"
-                    break;
-                case "video/mp4":
-                    return "dms-icon-file-movie-o type-mp4"
-                    break;
-                case "text/javascript":
-                    return "dms-icon-file-css type-file"
-                    break;
-                case "text/html":
-                    return "dms-icon-file-code-o type-file"
-                default :
-                    return "dms-icon-file-o type-file"
-                    break;
-
-            }
-        }
-
         function getFullTree (parentId){
             FolderApi.getFullTree(parentId)
         }
@@ -235,18 +192,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
             })
         }
 
-        function getRootFolder(){
-            FolderApi.getRootFolder($scope.authentication.user._id, function(resp){
-               var response = resp.data;
-                response[0].name = "Home"
 
-               $scope.folders = response;
-               $scope.folder.root = response[0];
 
-               $scope.goIntoFolder(response[0]);
-            });
-        }
-        getRootFolder();
 
 
         $scope.appendChildFolder = function(){
@@ -303,20 +250,10 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
             modalInstance.result.then(function () {
 
             }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+               // $log.info('Modal dismissed at: ' + new Date());
             });
         };
         //</editor-fold>
-
-
-
-
-
-
-
-
-
-
 
         //<editor-fold desc="Metodos Privados, no publicar">
         $scope.removeAllFiles = function(){
@@ -400,6 +337,15 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
 
 
+        FolderApi.getRootFolder($scope.authentication.user._id, function(resp){
+            var response = resp.data;
+            response[0].name = "Home"
+
+            $scope.folders = response;
+            $scope.folder.root = response[0];
+
+            $scope.goIntoFolder(response[0]);
+        });
 
 
         S = $scope;

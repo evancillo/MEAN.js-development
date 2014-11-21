@@ -4,7 +4,10 @@
 
 'use strict';
 
-angular.module('folders').controller('ModalFoldersController', ['$scope','$modalInstance', function($scope, $modalInstance){
+angular.module('folders').controller('ModalFoldersController', ['$scope','$modalInstance','folderItem','FileProperty', function($scope, $modalInstance, folderItem, FileProperty){
+
+    $scope.folderItem = folderItem;
+    $scope.fileProperty = FileProperty;
 
     $scope.ok = function(){
         $modalInstance.close();
@@ -13,4 +16,8 @@ angular.module('folders').controller('ModalFoldersController', ['$scope','$modal
     $scope.cancel = function(){
         $modalInstance.dismiss();
     }
+
+    M = $scope;
 }]);
+
+var M;

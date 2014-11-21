@@ -1,9 +1,55 @@
 <div>
     <div class="modal-header">
-        <h3 class="modal-title">Detalle</h3>
+        <h3 class="modal-title">{{folderItem.name}}</h3>
     </div>
-    <div class="modal-body">
-       <span>HOLA HOLA!! </span>
+    <div class="modal-body modal-file">
+
+        <div>
+            <span ng-class="fileProperty.getIconClass(folderItem.type)" class="modal-file-icon"></span>
+        </div>
+        <div class="desc">
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><span>nombre </span></td>
+                        <td>:</td>
+                        <td>{{folderItem.name}}</td>
+                    </tr>
+                    <tr>
+                        <td><span>tipo </span></td>
+                        <td>:</td>
+                        <td><span>{{folderItem.type}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>tamaño</span></td>
+                        <td>:</td>
+                        <td><span>{{folderItem.size}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>creado</span></td>
+                        <td>:</td>
+                        <td><span>{{folderItem.created}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>url</span></td>
+                        <td>:</td>
+                        <td><span>{{folderItem.url}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+            <!--
+            <div> <span></span> </div>
+            <div>   </div>
+            <div>   </div>
+            <div>   </div>
+            <div>   </div>
+            <div> <span></span> <span></span> </div> -->
+        </div>
+
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" ng-click="ok()">OK</button>

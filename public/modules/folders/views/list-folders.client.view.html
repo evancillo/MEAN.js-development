@@ -83,10 +83,8 @@
             -->
           <div class="row row-flex"  >
 
-
-
               <div class="col-xs-1 folder-icon-mw" ng-click="goIntoFolder(fold)">
-                  <span class="folder-list-icon" ng-class="setIcon(fold.type)"></span>
+                  <span class="folder-list-icon" ng-class="fileProperty.getIconClass(fold.type)"></span>
               </div>
               <div class="col-xs-9 col-sm-10 folder-row-mh" ng-click="goIntoFolder(fold)">
                   <span data-ng-bind="fold.name"></span>
