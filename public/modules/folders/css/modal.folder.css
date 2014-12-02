@@ -1,10 +1,13 @@
 .modal-file-icon {
-  font-size: 70px; }
+  font-size: 70px;
+  padding: 15px; }
 
 .modal-file {
   display: block; }
   .modal-file > div {
     display: inline-block; }
+  .modal-file > .modal-icon {
+    vertical-align: top; }
   .modal-file > .desc {
     font-weight: 200; }
     .modal-file > .desc > table > tbody > tr td:nth-child(3) {

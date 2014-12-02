@@ -17,6 +17,13 @@ angular.module('folders').controller('ModalFoldersController', ['$scope','$modal
         $modalInstance.dismiss();
     }
 
+    $scope.delete = function(){
+        $modalInstance.close({
+            function: 'delete',
+            item: folderItem
+        })
+    }
+
     M = $scope;
 }]);
 

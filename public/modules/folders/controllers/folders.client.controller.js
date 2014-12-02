@@ -146,7 +146,6 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
             return FolderApi.getCurrentFolder();
         }
 
-
         /*
 
         function refreshRootFolder(){
@@ -171,8 +170,6 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
         */
 
-
-
         function customFindOne(folder, callback){
 
              Folders.get({
@@ -191,10 +188,6 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                 $scope.folders = resp.data
             })
         }
-
-
-
-
 
         $scope.appendChildFolder = function(){
 
@@ -247,7 +240,14 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
                 }
             });
 
-            modalInstance.result.then(function () {
+            modalInstance.result.then(function (result) {
+
+                switch (result.function){
+                    case 'delete':
+                        $scope.deleteItem(result.item);
+                        break;
+
+                }
 
             }, function () {
                // $log.info('Modal dismissed at: ' + new Date());

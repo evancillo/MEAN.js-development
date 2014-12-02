@@ -22,6 +22,9 @@
 .type-mp4 {
   color: #3b0076 !important; }
 
+.type-folder {
+  color: lightblue !important; }
+
 .folder-agregar {
   max-width: 320px; }
   .folder-agregar > div {

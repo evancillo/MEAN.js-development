@@ -4,7 +4,7 @@
     </div>
     <div class="modal-body modal-file">
 
-        <div>
+        <div class="modal-icon">
             <span ng-class="fileProperty.getIconClass(folderItem.type)" class="modal-file-icon"></span>
         </div>
         <div class="desc">
@@ -34,7 +34,9 @@
                     <tr>
                         <td><span>url</span></td>
                         <td>:</td>
-                        <td><span>{{folderItem.url}}</span></td>
+                        <td><span>{{folderItem.url}}</span>
+                            <button class="btn btn-link" > Descargar </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -52,7 +54,8 @@
 
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-danger" ng-click="delete()" ><span class="dms-icon-trash-o"></span> </button>
+      <!--  <button class="btn btn-primary" ng-click="ok()">OK</button> -->
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>
 </div>

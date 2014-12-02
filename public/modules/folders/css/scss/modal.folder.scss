@@ -1,5 +1,6 @@
 .modal-file-icon{
   font-size: 70px;
+  padding: 15px;
 
 }
 
@@ -10,6 +11,9 @@
     display: inline-block;
   }
 
+  >.modal-icon{
+    vertical-align: top;
+  }
 
   >.desc{
     font-weight: 200;

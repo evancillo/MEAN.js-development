@@ -8,7 +8,7 @@ angular.module('core').factory('FileProperty', [function(){
         getIconClass : function(type){
             switch (type){
                 case 'folder':
-                    return "dms-icon-folder"
+                    return "dms-icon-folder type-folder"
                     break;
                 case 'image/png':
                     return "dms-icon-file-photo-o type-img"
