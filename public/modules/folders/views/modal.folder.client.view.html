@@ -35,7 +35,10 @@
                         <td><span>url</span></td>
                         <td>:</td>
                         <td><span>{{folderItem.url}}</span>
-                            <button class="btn btn-link" > Descargar </button>
+                            <button class="btn btn-link" >
+                                <a download="{{folderItem.name}}" ng-href="{{ folderItem.url }}">Descargar</a>
+                            </button>
+
                         </td>
                     </tr>
                 </tbody>
@@ -56,6 +59,6 @@
     <div class="modal-footer">
         <button class="btn btn-danger" ng-click="delete()" ><span class="dms-icon-trash-o"></span> </button>
       <!--  <button class="btn btn-primary" ng-click="ok()">OK</button> -->
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cerrar</button>
     </div>
 </div>
