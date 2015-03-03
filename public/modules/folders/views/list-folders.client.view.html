@@ -72,15 +72,6 @@
 
     <div class="list-group folder-list-group">
         <a data-ng-repeat="fold in folders | filter:filterFolderList" class="list-group-item ">
-       <!-- <a data-ng-repeat="folder in folders" data-ng-href="#!/folders/{{folder._id}}" class="list-group-item"> -->
-			<!--<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="folder.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="folder.user.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="folder.name"></h4>
-            -->
           <div class="row row-flex"  >
 
               <div class="col-xs-1 folder-icon-mw" ng-click="goIntoFolder(fold)">

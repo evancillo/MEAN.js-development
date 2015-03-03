@@ -191,6 +191,8 @@ angular.module('folders').controller('FoldersController', ['$scope', '$statePara
 
         $scope.appendChildFolder = function(){
 
+            if ($scope.folder.new=="")return;
+
             FolderApi.appendChildPOST($scope.folder.actual._id, $scope.folder.new, function(resp){
                 console.log ("Se agrega Child ", resp);
                 $scope.folders.push(resp.data[0]);
